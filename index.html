@@ -22,26 +22,16 @@
       overflow: hidden;
       background: #111;
     }
-    .bg{
-      position: fixed;
-      inset: 0;
-     .bg{
+   .bg{
   position: fixed;
   inset: 0;
 
   background-image: url("marco.jpg");
   background-repeat: no-repeat;
-
-  /* This shows the whole image (no big zoom) */
-  background-size: contain;
-
-  /* Center it */
   background-position: center;
-
-  /* Fill the leftover space with a dark color */
-  background-color: #111;
+  background-size: 10%; /* <-- change this percentage */
+  background-color: #111; /* fills the rest */
 }
-
     /* Soft overlay for readability */
     .overlay{
       position: fixed;
@@ -318,5 +308,6 @@
   </script>
 </body>
 </html>
+
 
 
