@@ -1,0 +1,307 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Will you be my Valentine? 💘</title>
+  <style>
+    :root{
+      --treat: #d8a15d;
+      --treat2:#c98943;
+      --ink:#2b1b12;
+      --cream:#fff7ee;
+      --pink:#ff4d7d;
+      --shadow: 0 20px 60px rgba(0,0,0,.35);
+    }
+
+    * { box-sizing: border-box; }
+    html, body { height: 100%; margin: 0; font-family: ui-rounded, system-ui, -apple-system, Segoe UI, Roboto, Arial; }
+
+    /* Background with Marco */
+    body{
+      overflow: hidden;
+      background: #111;
+    }
+    .bg{
+      position: fixed;
+      inset: 0;
+      background: url("marco.jpg") center/cover no-repeat;
+      transform: scale(1.02);
+      filter: saturate(1.05) contrast(1.05);
+    }
+    /* Soft overlay for readability */
+    .overlay{
+      position: fixed;
+      inset: 0;
+      background:
+        radial-gradient(1200px 700px at 50% 35%, rgba(0,0,0,.35), rgba(0,0,0,.65)),
+        linear-gradient(180deg, rgba(255,255,255,.05), rgba(0,0,0,.35));
+    }
+
+    /* Floating hearts */
+    .hearts{
+      position: fixed; inset: 0; pointer-events: none;
+      overflow: hidden;
+    }
+    .heart{
+      position: absolute;
+      font-size: clamp(16px, 2.2vw, 26px);
+      opacity: .0;
+      animation: floatUp linear forwards;
+      filter: drop-shadow(0 8px 10px rgba(0,0,0,.25));
+    }
+    @keyframes floatUp{
+      0%   { transform: translateY(20px) rotate(0deg) scale(.9); opacity: 0; }
+      10%  { opacity: .9; }
+      90%  { opacity: .9; }
+      100% { transform: translateY(-120vh) rotate(25deg) scale(1.25); opacity: 0; }
+    }
+
+    /* Center card */
+    .wrap{
+      position: relative;
+      height: 100%;
+      display: grid;
+      place-items: center;
+      padding: 24px;
+    }
+    .card{
+      width: min(720px, 92vw);
+      background: rgba(255, 247, 238, .14);
+      border: 1px solid rgba(255,255,255,.18);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-radius: 26px;
+      box-shadow: var(--shadow);
+      padding: clamp(18px, 4vw, 34px);
+      text-align: center;
+      color: #fff;
+      transform: translateY(6px);
+      animation: popIn .9s cubic-bezier(.2,1,.2,1) both;
+    }
+    @keyframes popIn{
+      from{ opacity: 0; transform: translateY(24px) scale(.98); }
+      to  { opacity: 1; transform: translateY(0) scale(1); }
+    }
+
+    .title{
+      margin: 0 0 10px;
+      font-size: clamp(28px, 4.6vw, 54px);
+      letter-spacing: .3px;
+      text-shadow: 0 10px 25px rgba(0,0,0,.35);
+    }
+    .subtitle{
+      margin: 0 0 22px;
+      font-size: clamp(14px, 2.1vw, 18px);
+      opacity: .92;
+    }
+
+    /* Treat buttons */
+    .btnRow{
+      position: relative;
+      height: 90px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 18px;
+      margin-top: 10px;
+    }
+
+    .treat{
+      position: relative;
+      border: none;
+      cursor: pointer;
+      color: var(--ink);
+      font-weight: 900;
+      letter-spacing: .6px;
+      text-transform: uppercase;
+      padding: 16px 22px;
+      min-width: 150px;
+      border-radius: 18px;
+      background:
+        linear-gradient(180deg, var(--treat), var(--treat2));
+      box-shadow:
+        0 16px 28px rgba(0,0,0,.35),
+        inset 0 2px 0 rgba(255,255,255,.35),
+        inset 0 -3px 0 rgba(0,0,0,.12);
+      transform: translateY(0);
+      transition: transform .15s ease, filter .15s ease;
+      user-select: none;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .treat::before,
+    .treat::after{
+      content:"";
+      position:absolute;
+      top: 50%;
+      width: 22px; height: 22px;
+      background: rgba(255,255,255,.22);
+      border-radius: 50%;
+      transform: translateY(-50%);
+      box-shadow: inset 0 2px 0 rgba(255,255,255,.35);
+    }
+    .treat::before{ left: 10px; }
+    .treat::after { right: 10px; }
+
+    .treat:hover{ transform: translateY(-2px) scale(1.02); filter: brightness(1.03); }
+    .treat:active{ transform: translateY(1px) scale(.99); }
+
+    .yes{
+      outline: 2px solid rgba(255,255,255,.18);
+    }
+
+    /* No button is positioned absolutely so it can dodge */
+    #noBtn{
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+    }
+
+    /* Success message */
+    .success{
+      margin-top: 18px;
+      font-size: clamp(16px, 2.4vw, 20px);
+      opacity: 0;
+      transform: translateY(8px);
+      transition: .35s ease;
+    }
+    .success.show{
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* Small footer note */
+    .note{
+      margin-top: 14px;
+      font-size: 12px;
+      opacity: .7;
+    }
+  </style>
+</head>
+<body>
+  <div class="bg"></div>
+  <div class="overlay"></div>
+  <div class="hearts" id="hearts"></div>
+
+  <main class="wrap">
+    <section class="card" aria-live="polite">
+      <h1 class="title">Will you be my Valentine? 💘</h1>
+      <p class="subtitle">Marco approves this message 🐾</p>
+
+      <div class="btnRow" id="arena">
+        <button class="treat yes" id="yesBtn">Yes</button>
+        <button class="treat" id="noBtn" aria-label="No (but it’s shy)">No</button>
+      </div>
+
+      <div class="success" id="successMsg">
+        YAY!!! 🎉💖 I’ll text you the details 😄
+      </div>
+
+      <div class="note">Tip: send this link on Valentine’s Day for maximum effect.</div>
+    </section>
+  </main>
+
+  <script>
+    // Floating hearts generator
+    const hearts = document.getElementById("hearts");
+    const heartChars = ["💘","💖","💗","💕","❤️","🐾"];
+    setInterval(() => {
+      const h = document.createElement("div");
+      h.className = "heart";
+      h.textContent = heartChars[Math.floor(Math.random()*heartChars.length)];
+      h.style.left = Math.random() * 100 + "vw";
+      h.style.bottom = "-10vh";
+      const dur = 5 + Math.random() * 4; // 5–9s
+      h.style.animationDuration = dur + "s";
+      h.style.opacity = "0";
+      hearts.appendChild(h);
+      setTimeout(() => h.remove(), (dur + 0.2) * 1000);
+    }, 420);
+
+    const arena = document.getElementById("arena");
+    const noBtn = document.getElementById("noBtn");
+    const yesBtn = document.getElementById("yesBtn");
+    const successMsg = document.getElementById("successMsg");
+
+    function clamp(n, min, max){ return Math.max(min, Math.min(max, n)); }
+
+    function moveNoButtonAway(pointerX, pointerY){
+      const a = arena.getBoundingClientRect();
+      const b = noBtn.getBoundingClientRect();
+
+      // Current center of NO button
+      const bx = b.left + b.width / 2;
+      const by = b.top + b.height / 2;
+
+      // Vector away from pointer
+      let dx = bx - pointerX;
+      let dy = by - pointerY;
+
+      // If pointer is exactly on it, pick random direction
+      if (Math.abs(dx) < 1 && Math.abs(dy) < 1) {
+        dx = (Math.random() - 0.5);
+        dy = (Math.random() - 0.5);
+      }
+
+      // Normalize and scale jump
+      const len = Math.hypot(dx, dy) || 1;
+      const jump = 140; // how far it jumps
+      dx = (dx / len) * jump;
+      dy = (dy / len) * jump;
+
+      // Proposed new position (relative to arena)
+      const curLeft = (parseFloat(noBtn.dataset.x) || 0);
+      const curTop  = (parseFloat(noBtn.dataset.y) || 0);
+
+      let nextX = curLeft + dx;
+      let nextY = curTop + dy;
+
+      // Constrain within arena
+      const pad = 8;
+      const maxX = (a.width/2) - (b.width/2) - pad;
+      const maxY = (a.height/2) - (b.height/2) - pad;
+
+      nextX = clamp(nextX, -maxX, maxX);
+      nextY = clamp(nextY, -maxY, maxY);
+
+      noBtn.dataset.x = nextX;
+      noBtn.dataset.y = nextY;
+
+      noBtn.style.transform = `translate(calc(-50% + ${nextX}px), calc(-50% + ${nextY}px))`;
+    }
+
+    // Dodge mouse
+    noBtn.addEventListener("mouseenter", (e) => {
+      moveNoButtonAway(e.clientX, e.clientY);
+    });
+    arena.addEventListener("mousemove", (e) => {
+      // If cursor gets close, scoot away
+      const b = noBtn.getBoundingClientRect();
+      const cx = b.left + b.width/2, cy = b.top + b.height/2;
+      const dist = Math.hypot(cx - e.clientX, cy - e.clientY);
+      if (dist < 120) moveNoButtonAway(e.clientX, e.clientY);
+    });
+
+    // Dodge taps on mobile
+    noBtn.addEventListener("touchstart", (e) => {
+      const t = e.touches[0];
+      moveNoButtonAway(t.clientX, t.clientY);
+      e.preventDefault();
+    }, { passive: false });
+
+    // Yes click celebration
+    yesBtn.addEventListener("click", () => {
+      successMsg.classList.add("show");
+      yesBtn.textContent = "YES!!! 💖";
+      yesBtn.disabled = true;
+      noBtn.style.display = "none";
+    });
+
+    // Place NO initially a bit to the right so both are visible
+    noBtn.dataset.x = 140;
+    noBtn.dataset.y = 0;
+    noBtn.style.transform = `translate(calc(-50% + 140px), -50%)`;
+  </script>
+</body>
+</html>
