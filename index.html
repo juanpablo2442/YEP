@@ -25,13 +25,23 @@
     .bg{
       position: fixed;
       inset: 0;
-        background-image: url("marco.jpg");
+     .bg{
+  position: fixed;
+  inset: 0;
+
+  background-image: url("marco.jpg");
   background-repeat: no-repeat;
+
+  /* This shows the whole image (no big zoom) */
+  background-size: contain;
+
+  /* Center it */
   background-position: center;
-  background-size: 120%; /* <-- change this (e.g., 100%, 130%, 160%) */
-  transform: scale(1.02);
-  filter: saturate(1.05) contrast(1.05);
-    }
+
+  /* Fill the leftover space with a dark color */
+  background-color: #111;
+}
+
     /* Soft overlay for readability */
     .overlay{
       position: fixed;
@@ -190,7 +200,6 @@
   <main class="wrap">
     <section class="card" aria-live="polite">
       <h1 class="title">Will you be my Valentine? 💘</h1>
-      <p class="subtitle">Marco approves this message 🐾</p>
 
       <div class="btnRow" id="arena">
         <button class="treat yes" id="yesBtn">Yes</button>
@@ -198,8 +207,9 @@
       </div>
 
       <div class="success" id="successMsg">
-        YAY!!! 🎉💖 I’ll text you the details 😄
-      </div>
+  YAY!!! 🎉💖 Marco approves this message 🐾
+</div>
+
 
       <div class="note">Tip: send this link on Valentine’s Day for maximum effect.</div>
     </section>
@@ -308,4 +318,5 @@
   </script>
 </body>
 </html>
+
 
