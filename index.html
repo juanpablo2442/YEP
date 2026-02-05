@@ -25,9 +25,12 @@
     .bg{
       position: fixed;
       inset: 0;
-      background: url("marco.jpg") center/cover no-repeat;
-      transform: scale(1.02);
-      filter: saturate(1.05) contrast(1.05);
+        background-image: url("marco.jpg");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 120%; /* <-- change this (e.g., 100%, 130%, 160%) */
+  transform: scale(1.02);
+  filter: saturate(1.05) contrast(1.05);
     }
     /* Soft overlay for readability */
     .overlay{
@@ -305,3 +308,4 @@
   </script>
 </body>
 </html>
+
